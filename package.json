@@ -1,0 +1,17 @@
+{
+  "name": "couchdb",
+  "version": "1.0.0",
+  "description": "Simple Couchdb ",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js"
+  },
+  "author": "IRFAN ULLAH",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "node-couchdb": "^2.0.0"
+  }
+}

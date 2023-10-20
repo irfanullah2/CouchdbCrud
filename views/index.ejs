@@ -1,0 +1,54 @@
+<h2>Customer App using Node and CouchDB</h2>
+
+<br>
+<h3>Add Customer</h3>
+<form method="post" action="/customer/add">
+  <input type="text" name="name" placeholder="Add Name">
+  <input type="text" name="email" placeholder="Add Email">
+  <input type="submit" value="Submit">
+</form>
+
+<h3>Customers</h3>
+<ul>
+  <% customers.forEach(function(customer){ %>
+    <li>
+      <h4 id="name_<%= customer.key %>">
+        <%= customer.value.name %>
+      </h4>
+      <p id="email_<%= customer.key %>">
+        <%= customer.value.email %>
+      </p>
+      <button id="editButton_<%= customer.key %>" onclick="editCustomer('<%= customer.key %>')">Edit</button>
+      <form method="post" action="/customer/delete/<%= customer.key %>" id="deleteForm_<%= customer.key %>">
+        <input type="hidden" value="<%= customer.value.rev %>" name="rev">
+        <input type="submit" value="Delete">
+      </form>
+      <form method="post" action="/customer/update/<%= customer.key %>" id="updateForm_<%= customer.key %>"
+        style="display:none;">
+        <input type="hidden" value="<%= customer.value.rev %>" name="rev">
+        <input type="text" name="updateName" placeholder="New Name">
+        <input type="text" name="updateEmail" placeholder="New Email">
+        <button type="submit">Save</button>
+        <button type="button" onclick="cancelEdit('<%= customer.key %>')">Cancel</button>
+      </form>
+    </li>
+    <% }); %>
+</ul>
+
+<script>
+  function editCustomer(customerId) {
+    document.getElementById(`name_${customerId}`).style.display = "none";
+    document.getElementById(`email_${customerId}`).style.display = "none";
+    document.getElementById(`editButton_${customerId}`).style.display = "none";
+    document.getElementById(`deleteForm_${customerId}`).style.display = "none";
+    document.getElementById(`updateForm_${customerId}`).style.display = "block";
+  }
+
+  function cancelEdit(customerId) {
+    document.getElementById(`name_${customerId}`).style.display = "block";
+    document.getElementById(`email_${customerId}`).style.display = "block";
+    document.getElementById(`editButton_${customerId}`).style.display = "block";
+    document.getElementById(`deleteForm_${customerId}`).style.display = "block";
+    document.getElementById(`updateForm_${customerId}`).style.display = "none";
+  }
+</script>
